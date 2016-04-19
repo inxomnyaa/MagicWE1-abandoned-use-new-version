@@ -22,4 +22,4 @@ Simply this:
  - flip / rotate clipboard
  - adding new modes to paste: //paste keep (only replaces air) | replace (default, replace all blocks) | noair (doesnt paste air blocks)
  - adding //cut
- 
+ - Copying + Pasting relatively to the player
