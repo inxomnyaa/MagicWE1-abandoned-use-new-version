@@ -1,0 +1,83 @@
+name: MagicWE
+main: MagicWE\Main
+version: 0.1.7
+api: [1.12.0]
+load: STARTUP
+authors: [thebigsmileXD]
+description: WorldEdit with a magic touch
+commands:
+  /pos1:
+    description: Select first position
+    usage: "//pos1"
+    permission: we.commands.pos
+  /pos2:
+    description: Select second position
+    usage: "//pos2"
+    permission: we.commands.pos
+  /set:
+    description: Fill a selection
+    usage: "//set <id[:meta] | id1[:meta1],id2[:meta2],id3[:meta3]>"
+    permission: we.commands.set
+  /replace:
+    description: Replace blocks in selection
+    usage: "//replace <id[:meta] | id1[:meta1],id2[:meta2],id3[:meta3]> <id[:meta] | id1[:meta1],id2[:meta2],id3[:meta3]>"
+    permission: we.commands.replace
+  /copy:
+    description: Copy a selection
+    usage: "//copy"
+    permission: we.commands.copy
+  /paste:
+    description: Paste copied blocks at your position
+    usage: "//paste"
+    permission: we.commands.paste
+  /undo:
+    description: Undo your last action
+    usage: "//undo"
+    permission: we.commands.undo
+  /wand:
+    description: Quicker way to select area. Tap -> pos1 Break -> pos2
+    usage: "//wand"
+    permission: we.commands.wand
+  /schem:
+    description: Schematic import + pasting
+    usage: "//schem <load> <filename> | //schem <paste> <filename>"
+    permission: we.commands.schem
+  /:
+    description: MagicWE help
+    usage: "// | //help"
+    permission: we.commands.help
+  /help:
+    description: MagicWE help
+    usage: "// | //help"
+    permission: we.commands.help
+permissions:
+  we.commands.admin:
+    default: op
+    description: "Permission for all MagicWE commands"
+  we.commands.pos:
+    default: op
+    description: "Permission for //pos1 and //pos2"
+  we.commands.set:
+    default: op
+    description: "Permission for //set"
+  we.commands.replace:
+    default: op
+    description: "Permission for //replace"
+  we.commands.copy:
+    default: op
+    description: "Permission for //copy"
+  we.commands.paste:
+    default: op
+    description: "Permission for //paste"
+  we.commands.undo:
+    default: op
+    description: "Permission for //undo"
+  we.commands.wand:
+    default: op
+    description: "Permission for //wand and wand selection tool"
+  we.commands.schem:
+    default: op
+    description: "Permission for //schem"
+  we.commands.help:
+    default: op
+    description: "Permission for help"
