@@ -30,7 +30,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 
 class Main extends PluginBase implements Listener{
 	public $areas;
-	private $pos1 = [], $pos2 = [], $copy = [], $copypos = [], $copymeta = [], $undo = [], $undometa = [], $undopos = [], $wand = [], $schematics = [];
+	private $pos1 = [], $pos2 = [], $copy = [], $copypos = [], $undo = [], $undometa = [], $undopos = [], $wand = [], $schematics = [];
 	private static $MAX_BUILD_HEIGHT = 128;
 
 	public function onLoad(){
@@ -208,15 +208,13 @@ class Main extends PluginBase implements Listener{
 		$level = $player->getLevel();
 		$blocks = explode(",", $blockarg);
 		$this->undo[$player->getName()] = [];
-		$this->undometa[$player->getName()] = [];
 		$this->undopos[$player->getName()] = $this->pos1[$player->getName()];
 		for($x = min($this->pos1[$player->getName()]->x, $this->pos2[$player->getName()]->x); $x <= max($this->pos1[$player->getName()]->x, $this->pos2[$player->getName()]->x); $x++){
 			for($y = min($this->pos1[$player->getName()]->y, $this->pos2[$player->getName()]->y); $y <= max($this->pos1[$player->getName()]->y, $this->pos2[$player->getName()]->y); $y++){
 				if($y > self::$MAX_BUILD_HEIGHT || $y < 0) continue;
 				for($z = min($this->pos1[$player->getName()]->z, $this->pos2[$player->getName()]->z); $z <= max($this->pos1[$player->getName()]->z, $this->pos2[$player->getName()]->z); $z++){
 					if(!$level->isChunkLoaded($x, $z)) $level->loadChunk($x, $z, true);
-					$this->undo[$player->getName()][$x][$y][$z] = $level->getBlockIdAt($this->pos1[$player->getName()]->x + $x, $this->pos1[$player->getName()]->y + $y, $this->pos1[$player->getName()]->z + $z);
-					$this->undometa[$player->getName()][$x][$y][$z] = $level->getBlockDataAt($this->pos1[$player->getName()]->x + $x, $this->pos1[$player->getName()]->y + $y, $this->pos1[$player->getName()]->z + $z);
+					$this->undo[$player->getName()][$x][$y][$z] = $level->getBlock($this->pos1[$player->getName()]->add($x, $y, $z));
 					$blockstring = $blocks[array_rand($blocks, 1)];
 					$block = explode(":", $blockstring)[0];
 					$level->setBlockIdAt($x, $y, $z, $block);
@@ -234,15 +232,13 @@ class Main extends PluginBase implements Listener{
 		$blocks1 = explode(",", $blockarg1);
 		$blocks2 = explode(",", $blockarg2);
 		$this->undo[$player->getName()] = [];
-		$this->undometa[$player->getName()] = [];
 		$this->undopos[$player->getName()] = $this->pos1[$player->getName()];
 		for($x = min($this->pos1[$player->getName()]->x, $this->pos2[$player->getName()]->x); $x <= max($this->pos1[$player->getName()]->x, $this->pos2[$player->getName()]->x); $x++){
 			for($y = min($this->pos1[$player->getName()]->y, $this->pos2[$player->getName()]->y); $y <= max($this->pos1[$player->getName()]->y, $this->pos2[$player->getName()]->y); $y++){
 				if($y > self::$MAX_BUILD_HEIGHT || $y < 0) continue;
 				for($z = min($this->pos1[$player->getName()]->z, $this->pos2[$player->getName()]->z); $z <= max($this->pos1[$player->getName()]->z, $this->pos2[$player->getName()]->z); $z++){
 					if(!$level->isChunkLoaded($x, $z)) $level->loadChunk($x, $z, true);
-					$this->undo[$player->getName()][$x][$y][$z] = $level->getBlockIdAt($this->pos1[$player->getName()]->x + $x, $this->pos1[$player->getName()]->y + $y, $this->pos1[$player->getName()]->z + $z);
-					$this->undometa[$player->getName()][$x][$y][$z] = $level->getBlockDataAt($this->pos1[$player->getName()]->x + $x, $this->pos1[$player->getName()]->y + $y, $this->pos1[$player->getName()]->z + $z);
+					$this->undo[$player->getName()][$x][$y][$z] = $level->getBlock($this->pos1[$player->getName()]->add($x, $y, $z));
 					foreach($blocks1 as $blockstring1){
 						$block1 = explode(":", $blockstring1)[0];
 						$meta1 = (isset(explode(":", $blockstring1)[1])?explode(":", $blockstring1)[1]:false);
@@ -262,14 +258,16 @@ class Main extends PluginBase implements Listener{
 
 	public function copy(Player $player){
 		$level = $player->getLevel();
+		$pos1 = $this->pos1[$player->getName()];
+		$pos2 = $this->pos2[$player->getName()];
+		$pos = new Vector3(min($pos1->x, $pos2->x), min($pos1->y, $pos2->y), min($pos1->z, $pos2->z));
 		$this->copy[$player->getName()] = [];
-		$this->copymeta[$player->getName()] = [];
-		for($x = 0; $x <= max($this->pos1[$player->getName()]->x, $this->pos2[$player->getName()]->x) - min($this->pos1[$player->getName()]->x, $this->pos2[$player->getName()]->x); $x++){
-			for($y = 0; $y <= max($this->pos1[$player->getName()]->y, $this->pos2[$player->getName()]->y) - min($this->pos1[$player->getName()]->y, $this->pos2[$player->getName()]->y); $y++){
+		$this->copypos[$player->getName()] = $pos->subtract($player->getPosition()->floor());
+		for($x = 0; $x <= abs($pos1->x - $pos2->x); $x++){
+			for($y = 0; $y <= abs($pos1->y - $pos2->y); $y++){
 				if($y > self::$MAX_BUILD_HEIGHT || $y < 0) continue;
-				for($z = 0; $z <= max($this->pos1[$player->getName()]->z, $this->pos2[$player->getName()]->z) - min($this->pos1[$player->getName()]->z, $this->pos2[$player->getName()]->z); $z++){
-					$this->copy[$player->getName()][$x][$y][$z] = $level->getBlockIdAt($this->pos1[$player->getName()]->x + $x, $this->pos1[$player->getName()]->y + $y, $this->pos1[$player->getName()]->z + $z);
-					$this->copymeta[$player->getName()][$x][$y][$z] = $level->getBlockDataAt($this->pos1[$player->getName()]->x + $x, $this->pos1[$player->getName()]->y + $y, $this->pos1[$player->getName()]->z + $z);
+				for($z = 0; $z <= abs($pos1->z - $pos2->z); $z++){
+					$this->copy[$player->getName()][$x][$y][$z] = $level->getBlock($pos->add($x, $y, $z));
 				}
 			}
 		}
@@ -278,19 +276,17 @@ class Main extends PluginBase implements Listener{
 
 	public function paste(Player $player){
 		$level = $player->getLevel();
-		$pos = $player->getPosition();
+		$pos = $player->getPosition()->add($this->copypos[$player->getName()]);
 		$this->undo[$player->getName()] = [];
-		$this->undometa[$player->getName()] = [];
 		$this->undopos[$player->getName()] = $pos;
 		for($x = 0; $x < count(array_keys($this->copy[$player->getName()])); $x++){
 			for($y = 0; $y < count(array_keys($this->copy[$player->getName()][$x])); $y++){
 				if($y > self::$MAX_BUILD_HEIGHT || $y < 0) continue;
 				for($z = 0; $z < count(array_keys($this->copy[$player->getName()][$x][$y])); $z++){
 					if(!$level->isChunkLoaded($x, $z)) $level->loadChunk($x, $z, true);
-					$this->undo[$player->getName()][$x][$y][$z] = $level->getBlockIdAt($pos->x + $x, $pos->y + $y, $pos->z + $z);
-					$this->undometa[$player->getName()][$x][$y][$z] = $level->getBlockDataAt($pos->x + $x, $pos->y + $y, $pos->z + $z);
-					$level->setBlockIdAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->copy[$player->getName()][$x][$y][$z]);
-					$level->setBlockDataAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->copymeta[$player->getName()][$x][$y][$z]);
+					$this->undo[$player->getName()][$x][$y][$z] = $level->getBlock($pos->add($x, $y, $z));
+					$level->setBlockIdAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->copy[$player->getName()][$x][$y][$z]->getId());
+					$level->setBlockDataAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->copy[$player->getName()][$x][$y][$z]->getDamage());
 				}
 			}
 		}
@@ -303,8 +299,8 @@ class Main extends PluginBase implements Listener{
 		for($x = 0; $x < count(array_keys($this->undo[$player->getName()])); $x++){
 			for($y = 0; $y < count(array_keys($this->undo[$player->getName()][$x])); $y++){
 				for($z = 0; $z < count(array_keys($this->undo[$player->getName()][$x][$y])); $z++){
-					$level->setBlockIdAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->undo[$player->getName()][$x][$y][$z]);
-					$level->setBlockDataAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->undometa[$player->getName()][$x][$y][$z]);
+					$level->setBlockIdAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->undo[$player->getName()][$x][$y][$z]->getId());
+					$level->setBlockDataAt($pos->x + $x, $pos->y + $y, $pos->z + $z, $this->undo[$player->getName()][$x][$y][$z]->getDamage());
 				}
 			}
 		}
@@ -422,7 +418,6 @@ class Main extends PluginBase implements Listener{
 			for($b = 0; $b < $height; $b++){
 				for($c = -$radius; $c <= $radius; $c++){
 					if($a * $a + $c * $c <= $radius * $radius){
-						// $block = Item::get ( $blockid )->getBlock ();
 						$pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, true, false);
 						$changed++;
 					}
@@ -438,7 +433,6 @@ class Main extends PluginBase implements Listener{
 			for($b = 0; $b < $height; $b++){
 				for($c = -$radius; $c <= $radius; $c++){
 					if($a * $a + $c * $c >= ($radius - 1) * ($radius - 1)){
-						// $block = Item::get ( $blockid )->getBlock ();
 						$pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, true, false);
 						$changed++;
 					}
@@ -471,12 +465,12 @@ class Main extends PluginBase implements Listener{
 		$data = '';
 		$pos1 = $this->pos1[$sender->getName()];
 		$pos2 = $this->pos2[$sender->getName()];
-		$w = max($pos1->x, $pos2->x) - min($pos1->x, $pos2->x);
-		$h = max($pos1->y, $pos2->y) - min($pos1->y, $pos2->y);
-		$l = max($pos1->z, $pos2->z) - min($pos1->z, $pos2->z);
-		for($x = 0; $x < $w; $x++){
-			for($y = 0; $y < $h && $y <= self::$MAX_BUILD_HEIGHT; $y++){
-				for($z = 0; $z < $l; $z++){
+		$w = max($pos1->x, $pos2->x) - min($pos1->x, $pos2->x) + 1;
+		$h = max($pos1->y, $pos2->y) - min($pos1->y, $pos2->y) + 1;
+		$l = max($pos1->z, $pos2->z) - min($pos1->z, $pos2->z) + 1;
+		for($x = 0; $x <= $w; $x++){
+			for($y = 0; $y <= $h && $y <= self::$MAX_BUILD_HEIGHT; $y++){
+				for($z = 0; $z <= $l; $z++){
 					$block = $sender->getLevel()->getBlock($pos1->add($x, $y, $z));
 					$id = chr($block->getId());
 					$damage = chr($block->getDamage());
@@ -485,7 +479,7 @@ class Main extends PluginBase implements Listener{
 				}
 			}
 		}
-		$schematic = new SchematicExporter($blocks, $data, $width, $lenght, $height);
+		$schematic = new SchematicExporter($blocks, $data, $w, $l, $h);
 		return $schematic->saveSchematic($this->getDataFolder() . "/schematics/" . $filename . ".schematic");
 	}
 }
