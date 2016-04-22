@@ -1,6 +1,6 @@
 name: MagicWE
 main: MagicWE\Main
-version: 0.1.9
+version: 0.1.12
 api: [1.12.0]
 load: STARTUP
 authors: [thebigsmileXD]
@@ -34,13 +34,21 @@ commands:
     description: Undo your last action
     usage: "//undo"
     permission: we.commands.undo
+  /redo:
+    description: Redo your last action
+    usage: "//redo"
+    permission: we.commands.redo
+  /flip:
+    description: Flip the clipboard of //copy
+    usage: "//flip <x|y|z>"
+    permission: we.commands.flip
   /wand:
     description: Quicker way to select area. Tap -> pos1 Break -> pos2
     usage: "//wand"
     permission: we.commands.wand
   /schem:
-    description: Schematic import + pasting
-    usage: "//schem <load> <filename> | //schem <paste> <filename>"
+    description: Schematic import + pasting + export
+    usage: "//schem <load> <filename> | //schem <paste> <filename> | //schem <save|export> <filename>"
     permission: we.commands.schem
   /:
     description: MagicWE help
@@ -72,6 +80,12 @@ permissions:
   we.commands.undo:
     default: op
     description: "Permission for //undo"
+  we.commands.redo:
+    default: op
+    description: "Permission for //redo"
+  we.commands.flip:
+    default: op
+    description: "Permission for //flip"
   we.commands.wand:
     default: op
     description: "Permission for //wand and wand selection tool"
