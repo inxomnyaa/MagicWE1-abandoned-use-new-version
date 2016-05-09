@@ -15,6 +15,7 @@ Simply this:
  - //set 1 | //set 1,2,3,25,67 | //set 5:3,4
  - //replace 1 1 | //replace 1,2,45 5:3,1
  - //schem [load|paste|export]
+ - Copying + Pasting relative to the player
 
 # Planned features:
  - Fixing simple bugs on //schem load + paste
@@ -24,4 +25,3 @@ Simply this:
  - flip / rotate clipboard
  - adding new modes to paste: //paste keep (only replaces air) | replace (default, replace all blocks) | noair (doesnt paste air blocks)
  - adding //cut
- - Copying + Pasting relative to the player
