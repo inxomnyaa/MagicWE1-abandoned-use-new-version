@@ -3,10 +3,10 @@
 namespace MagicWE;
 
 use pocketmine\nbt\NBT;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\ByteArray;
-use pocketmine\nbt\tag\Short;
-use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ByteArrayTag;
+use pocketmine\nbt\tag\ShortTag;
+use pocketmine\nbt\tag\StringTag;
 
 class SchematicExporter{
 	private $blocks = [];
@@ -30,7 +30,7 @@ class SchematicExporter{
 	 */
 	public function saveSchematic($path){
 		$nbt = new NBT(NBT::BIG_ENDIAN);
-		$nbt->setData(new Compound('Schematic', [new ByteArray('Blocks', $this->blocks), new ByteArray('Data', $this->data), new Short('Height', $this->height), new Short('Length', $this->lenght), new Short('Width', $this->width), new String('Materials', 'Alpha')]));
+		$nbt->setData(new CompoundTag('Schematic', [new ByteArrayTag('Blocks', $this->blocks), new ByteArrayTag('Data', $this->data), new ShortTag('Height', $this->height), new ShortTag('Length', $this->lenght), new ShortTag('Width', $this->width), new StringTag('Materials', 'Alpha')]));
 		file_put_contents($path, $nbt->writeCompressed());
 		return touch($path);
 	}

@@ -27,8 +27,6 @@ use pocketmine\level\Position;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\item\Item;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\level\generator\normal\biome\PlainBiome;
-use pocketmine\level\Location;
 
 class Main extends PluginBase implements Listener{
 	public $areas;
