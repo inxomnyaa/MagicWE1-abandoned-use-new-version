@@ -158,6 +158,9 @@ class Main extends PluginBase implements Listener{
 							$this->flip($sender, $args[0]);
 							return true;
 						}
+						elseif(!isset($args[0])){
+							$sender->sendMessage(TextFormat::RED . "[MagicWE] invalid argments");
+						}
 						else{
 							$sender->sendMessage(TextFormat::RED . "[MagicWE] Nothing to flip, use //copy first");
 						}
@@ -383,17 +386,18 @@ class Main extends PluginBase implements Listener{
 			$this->copy[$player->getName()] = array_reverse($this->copy[$player->getName()]);
 		}
 		elseif($xyz === "y"){
-			foreach($this->copy[$player->getName()] as $block){
-				$this->copy[$player->getName()][$block->x] = array_reverse($this->copy[$player->getName()][$block->x]);
+			foreach(array_keys($this->copy[$player->getName()]) as $block){
+				$this->copy[$player->getName()][$block] = array_reverse($this->copy[$player->getName()][$block]);
 			}
 		}
 		elseif($xyz === "z"){
-			foreach($this->copy[$player->getName()] as $block){
-				foreach($block->x as $y){
-					$this->copy[$player->getName()][$block->x][$y] = array_reverse($this->copy[$player->getName()][$block->x][$y]);
+			foreach(array_keys($this->copy[$player->getName()]) as $block){
+				foreach(array_keys($this->copy[$player->getName()][$block]) as $y){
+					$this->copy[$player->getName()][$block][$y] = array_reverse($this->copy[$player->getName()][$block][$y]);
 				}
 			}
 		}
+		else return false;
 		$player->sendMessage(TextFormat::GREEN . "[MagicWE] Clipboard flipped on $xyz-Axis");
 	}
 	
