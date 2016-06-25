@@ -1,4 +1,4 @@
-# MagicWE (PHP5)
+# MagicWE (PHP7)
 WorldEdit with a magic touch for PocketMine
 
 Special thanks to [@svilex](https://github.com/svilex), helping me with the schematics!
