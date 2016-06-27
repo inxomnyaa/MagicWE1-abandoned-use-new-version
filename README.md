@@ -11,11 +11,14 @@ Simply this:
  - //wand (Fully working Wand selections using a wooden axe)
  - //copy
  - //paste
- - //undo (for 1 time)
- - //set 1 | //set 1,2,3,25,67 | //set 5:3,4
- - //replace 1 1 | //replace 1,2,45 5:3,1
+ - //undo
+ - //redo
+ - //set 1 | //set 1:3,2,25:5,wooden_planks:2 (randomly chosen from given id's) | //set 5:3 (metadata support) | //set grass
+ - //replace 1 1 | //replace 1:5,2,45 5:3,1  (replace 1:5, 2, 45 with randomly chosen 5:3 or 1) | //replace dirt grass
  - //schem [load|paste|export]
+ - Commands can use block names instead of id's
  - Copying + Pasting relative to the player
+ - Estimated time + Changed blocks counter
 
 # Planned features:
  - Fixing simple bugs on //schem load + paste
@@ -25,3 +28,6 @@ Simply this:
  - flip / rotate clipboard
  - adding new modes to paste: //paste keep (only replaces air) | replace (default, replace all blocks) | noair (doesnt paste air blocks)
  - adding //cut
+ - Async loading of schematics (Maybe not because they already load fast)
+
+For commands see the [This issue](https://github.com/thebigsmileXD/MagicWE/issues/3)
