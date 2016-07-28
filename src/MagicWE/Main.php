@@ -229,6 +229,36 @@ class Main extends PluginBase implements Listener{
 						}
 						break;
 					}
+
+				case "/cyl":
+					{
+						if(!$sender->hasPermission("magicwe.command.cyl")) return;
+						if(isset($args[0], $args[1])){
+							#$this->fill($sender, $args[0]);
+							$this->W_cylinder($sender->getPosition(), $args[0], $args[1], $args[2]??1);
+							$sender->getLevel()->doChunkGarbageCollection();
+							return true;
+						}
+						else{
+							$sender->sendMessage(TextFormat::RED . "[MagicWE] Missing arguments");
+						}
+						break;
+					}
+
+				case "/hcyl":
+					{
+						if(!$sender->hasPermission("magicwe.command.hcyl")) return;
+						if(isset($args[0], $args[1])){
+							#$this->fill($sender, $args[0]);
+							$this->W_holocylinder($sender->getPosition(), $args[0], $args[1], $args[2]??1);
+							$sender->getLevel()->doChunkGarbageCollection();
+							return true;
+						}
+						else{
+							$sender->sendMessage(TextFormat::RED . "[MagicWE] Missing arguments");
+						}
+						break;
+					}
 				default:
 					{
 						return false;
@@ -435,7 +465,14 @@ class Main extends PluginBase implements Listener{
 	
 	// structures
 	public function W_sphere(Position $pos, $block, $radiusX, $radiusY, $radiusZ, $filled = true, &$output = null){
-		$count = 0;
+		$changed = 0;
+		$time = microtime(TRUE);
+		$block = Item::fromString($blockstring)->getBlock();
+		if($block->getId() === 0 && !(strtolower(explode(":", $blockstring)[0]) == "air" || explode(":", $blockstring)[0] == "0")){
+			$player->sendMessage(TextFormat::RED . '[MagicWE] No such block/item found: "' . $blockstring . '", aborting');
+			$player->sendMessage(TextFormat::RED . "[MagicWE] Creating cylinder failed.");
+			return;
+		}
 		$level = $pos->getLevel();
 		
 		$radiusX += 0.5;
@@ -508,40 +545,51 @@ class Main extends PluginBase implements Listener{
 				}
 			}
 		}
-		
-		$output .= "$count block(s) have been changed.\n";
-		// $this->log ( $output );
-		return true;
+		$player->sendMessage(TextFormat::GREEN . "[MagicWE] Creating sphere succeed, took " . round((microtime(TRUE) - $time), 2) . "s, " . $changed . " Blocks changed.");
 	}
 
-	public function W_cylinder(Position $pos, $block, $radius, $height, &$output){
+	public function W_cylinder(Position $pos, $blockstring, $radius, $height){
 		$changed = 0;
+		$time = microtime(TRUE);
+		$block = Item::fromString($blockstring)->getBlock();
+		if($block->getId() === 0 && !(strtolower(explode(":", $blockstring)[0]) == "air" || explode(":", $blockstring)[0] == "0")){
+			$player->sendMessage(TextFormat::RED . '[MagicWE] No such block/item found: "' . $blockstring . '", aborting');
+			$player->sendMessage(TextFormat::RED . "[MagicWE] Creating cylinder failed.");
+			return;
+		}
 		for($a = -$radius; $a <= $radius; $a++){
 			for($b = 0; $b < $height; $b++){
 				for($c = -$radius; $c <= $radius; $c++){
 					if($a * $a + $c * $c <= $radius * $radius){
-						$pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, true, false);
+						if($pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, false, false)) $changed++;
 						$changed++;
 					}
 				}
 			}
 		}
-		$output = $changed . " block(s) have been created.";
+		$player->sendMessage(TextFormat::GREEN . "[MagicWE] Creating cylinder succeed, took " . round((microtime(TRUE) - $time), 2) . "s, " . $changed . " Blocks changed.");
 	}
 
-	public function W_holocylinder(Position $pos, $block, $radius, $height, &$output){
+	public function W_holocylinder(Position $pos, $blockstring, $radius, $height){
+		$changed = 0;
+		$time = microtime(TRUE);
+		$block = Item::fromString($blockstring)->getBlock();
+		if($block->getId() === 0 && !(strtolower(explode(":", $blockstring)[0]) == "air" || explode(":", $blockstring)[0] == "0")){
+			$player->sendMessage(TextFormat::RED . '[MagicWE] No such block/item found: "' . $blockstring . '", aborting');
+			$player->sendMessage(TextFormat::RED . "[MagicWE] Creating cylinder failed.");
+			return;
+		}
 		$changed = 0;
 		for($a = -$radius; $a <= $radius; $a++){
 			for($b = 0; $b < $height; $b++){
 				for($c = -$radius; $c <= $radius; $c++){
 					if($a * $a + $c * $c >= ($radius - 1) * ($radius - 1)){
-						$pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, true, false);
-						$changed++;
+						if($pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, false, false)) $changed++;
 					}
 				}
 			}
 		}
-		$output = $changed . " block(s) have been created.";
+		$player->sendMessage(TextFormat::GREEN . "[MagicWE] Creating hollow cylinder succeed, took " . round((microtime(TRUE) - $time), 2) . "s, " . $changed . " Blocks changed.");
 	}
 	
 	// schematic

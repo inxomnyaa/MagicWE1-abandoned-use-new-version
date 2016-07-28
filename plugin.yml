@@ -1,6 +1,6 @@
 name: MagicWE
 main: MagicWE\Main
-version: 0.2.1
+version: 0.2.3
 api: [1.13.0,2.0.0]
 load: STARTUP
 authors: [thebigsmileXD]
@@ -50,6 +50,14 @@ commands:
     description: Schematic import + pasting + export
     usage: "//schem <load> <filename> | //schem <paste> <filename> | //schem <save|export> <filename>"
     permission: we.commands.schem
+  /cyl:
+    description: Creates a cylinder
+    usage: "//cyl <block> <radius> [height]"
+    permission: we.commands.cyl
+  /hcyl:
+    description: Creates a hollow cylinder
+    usage: "//hcyl <block> <outerradius> [height]"
+    permission: we.commands.hcyl
   /:
     description: MagicWE help
     usage: "// | //help"
@@ -92,6 +100,12 @@ permissions:
   we.commands.schem:
     default: op
     description: "Permission for //schem"
+  we.commands.cyl:
+    default: op
+    description: "Permission for //cyl"
+  we.commands.hcyl:
+    default: op
+    description: "Permission for //hcyl"
   we.commands.help:
     default: op
     description: "Permission for help"
