@@ -235,7 +235,7 @@ class Main extends PluginBase implements Listener{
 						if(!$sender->hasPermission("magicwe.command.cyl")) return;
 						if(isset($args[0], $args[1])){
 							#$this->fill($sender, $args[0]);
-							$this->W_cylinder($sender->getPosition(), $args[0], $args[1], $args[2]??1);
+							$this->W_cylinder($sender, $sender->getPosition(), $args[0], $args[1], $args[2]??1);
 							$sender->getLevel()->doChunkGarbageCollection();
 							return true;
 						}
@@ -250,7 +250,7 @@ class Main extends PluginBase implements Listener{
 						if(!$sender->hasPermission("magicwe.command.hcyl")) return;
 						if(isset($args[0], $args[1])){
 							#$this->fill($sender, $args[0]);
-							$this->W_holocylinder($sender->getPosition(), $args[0], $args[1], $args[2]??1);
+							$this->W_holocylinder($sender, $sender->getPosition(), $args[0], $args[1], $args[2]??1);
 							$sender->getLevel()->doChunkGarbageCollection();
 							return true;
 						}
@@ -464,7 +464,7 @@ class Main extends PluginBase implements Listener{
 	}
 	
 	// structures
-	public function W_sphere(Position $pos, $block, $radiusX, $radiusY, $radiusZ, $filled = true, &$output = null){
+	public function W_sphere(Player $player, Position $pos, $block, $radiusX, $radiusY, $radiusZ, $filled = true, &$output = null){
 		$changed = 0;
 		$time = microtime(TRUE);
 		$block = Item::fromString($blockstring)->getBlock();
@@ -548,7 +548,7 @@ class Main extends PluginBase implements Listener{
 		$player->sendMessage(TextFormat::GREEN . "[MagicWE] Creating sphere succeed, took " . round((microtime(TRUE) - $time), 2) . "s, " . $changed . " Blocks changed.");
 	}
 
-	public function W_cylinder(Position $pos, $blockstring, $radius, $height){
+	public function W_cylinder(Player $player, Position $pos, $blockstring, $radius, $height){
 		$changed = 0;
 		$time = microtime(TRUE);
 		$block = Item::fromString($blockstring)->getBlock();
@@ -570,7 +570,7 @@ class Main extends PluginBase implements Listener{
 		$player->sendMessage(TextFormat::GREEN . "[MagicWE] Creating cylinder succeed, took " . round((microtime(TRUE) - $time), 2) . "s, " . $changed . " Blocks changed.");
 	}
 
-	public function W_holocylinder(Position $pos, $blockstring, $radius, $height){
+	public function W_holocylinder(Player $player, Position $pos, $blockstring, $radius, $height){
 		$changed = 0;
 		$time = microtime(TRUE);
 		$block = Item::fromString($blockstring)->getBlock();
