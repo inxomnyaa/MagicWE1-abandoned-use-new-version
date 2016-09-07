@@ -611,7 +611,7 @@ class Main extends PluginBase implements Listener{
 	}
 
 	public function loadSchematic(Player $player, $file){
-		$path = $this->getDataFolder() . "/schematics/" . $file . ".schematic";
+		$path = $this->getDataFolder() . "schematics/" . $file . ".schematic";
 		return new SchematicLoader($this, $path);
 	}
 

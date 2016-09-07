@@ -1,6 +1,6 @@
 name: MagicWE
 main: MagicWE\Main
-version: 0.2.4
+version: 0.2.5
 api: [1.13.0,2.0.0]
 load: STARTUP
 authors: [thebigsmileXD]

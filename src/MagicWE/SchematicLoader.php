@@ -11,7 +11,7 @@
  *
  * Copyright (C) 2016 svile
  *
- * THANKS SO MUCH TO SVILE FOR MAKING THIS FOR ME!
+ * THANKS SO MUCH TO SVILE FOR HELPING ME WITH THIS!
  * My code just had 2 other things thats why it didn't work. He made it :)
  */
 namespace MagicWE;
