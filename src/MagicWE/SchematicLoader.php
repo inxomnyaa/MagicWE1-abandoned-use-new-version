@@ -104,7 +104,12 @@ class SchematicLoader{
 							$damage = Fence::FENCE_DARKOAK;
 							break;
 						case Item::STONE_BUTTON:
+							$id = Item::STONE_BUTTON;
+							$damage ^= 0x03;//temp client crash fix
+							break;
 						case Item::WOODEN_BUTTON:
+							$id = Item::WOODEN_BUTTON;
+							$damage ^= 0x03;//temp client crash fix
 							break;
 						case Item::TRAPDOOR:
 						case Item::IRON_TRAPDOOR:

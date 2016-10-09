@@ -276,7 +276,7 @@ class Main extends PluginBase implements Listener{
 		$block = $event->getBlock();
 		if($sender->hasPermission("magicwe.command.wand") && $sender->getInventory()->getItemInHand()->getId() === Item::WOODEN_AXE && $this->wand[$sender->getName()] === 1){
 			if($block->y > self::$MAX_BUILD_HEIGHT || $block->y < 0) $sender->sendMessage(TextFormat::GOLD . "[MagicWE] Warning: You are above y:" . self::$MAX_BUILD_HEIGHT . " or below y:0");
-			$this->pos1[$sender->getName()] = $block;
+			$this->pos1[$sender->getName()] = $block->floor();
 			$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Position 1 set as x:" . $block->x . " y:" . $block->y . " z:" . $block->z);
 			$event->setCancelled();
 		}
@@ -288,7 +288,7 @@ class Main extends PluginBase implements Listener{
 		$block = $event->getBlock();
 		if($sender->hasPermission("magicwe.command.wand") && $sender->getInventory()->getItemInHand()->getId() === Item::WOODEN_AXE && $this->wand[$sender->getName()] === 1){
 			if($block->y > self::$MAX_BUILD_HEIGHT || $block->y < 0) $sender->sendMessage(TextFormat::GOLD . "[MagicWE] Warning: You are above y:" . self::$MAX_BUILD_HEIGHT . " or below y:0");
-			$this->pos2[$sender->getName()] = $block;
+			$this->pos2[$sender->getName()] = $block->floor();
 			$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Position 2 set as x:" . $block->x . " y:" . $block->y . " z:" . $block->z);
 			$event->setCancelled();
 		}
@@ -678,6 +678,6 @@ class Main extends PluginBase implements Listener{
 			}
 		}
 		$schematic = new SchematicExporter($blocks, $data, $w, $l, $h);
-		return $schematic->saveSchematic($this->getDataFolder() . "/schematics/" . $filename . ".schematic");
+		return $schematic->saveSchematic(str_replace("//", "/", str_replace("\/", "/", $this->getDataFolder() . "/schematics/" . $filename . ".schematic")));
 	}
 }
