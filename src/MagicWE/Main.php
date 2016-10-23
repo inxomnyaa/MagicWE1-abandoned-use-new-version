@@ -51,7 +51,7 @@ class Main extends PluginBase implements Listener{
 			switch($command){
 				case "/pos1":
 					{
-						if(!$sender->hasPermission("magicwe.command.pos1")) return;
+						if(!$sender->hasPermission("we.command.pos1") && !$sender->hasPermission("we.command.admin")) return;
 						$pos1x = $sender->getFloorX();
 						$pos1y = $sender->getFloorY();
 						$pos1z = $sender->getFloorZ();
@@ -64,7 +64,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/pos2":
 					{
-						if(!$sender->hasPermission("magicwe.command.pos2")) return;
+						if(!$sender->hasPermission("we.command.pos2") && !$sender->hasPermission("we.command.admin")) return;
 						$pos2x = $sender->getFloorX();
 						$pos2y = $sender->getFloorY();
 						$pos2z = $sender->getFloorZ();
@@ -77,7 +77,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/set":
 					{
-						if(!$sender->hasPermission("magicwe.command.set")) return;
+						if(!$sender->hasPermission("we.command.set") && !$sender->hasPermission("we.command.admin")) return;
 						if(isset($args[0])){
 							if(isset($this->pos1[$sender->getName()], $this->pos2[$sender->getName()])){
 								$this->fill($sender, $args[0]);
@@ -93,7 +93,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/replace":
 					{
-						if(!$sender->hasPermission("magicwe.command.replace")) return;
+						if(!$sender->hasPermission("we.command.replace") && !$sender->hasPermission("we.command.admin")) return;
 						if(isset($args[0]) && isset($args[1])){
 							if(isset($this->pos1[$sender->getName()], $this->pos2[$sender->getName()])){
 								$this->replace($sender, $args[0], $args[1]);
@@ -109,7 +109,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/copy":
 					{
-						if(!$sender->hasPermission("magicwe.command.copy")) return;
+						if(!$sender->hasPermission("we.command.copy") && !$sender->hasPermission("we.command.admin")) return;
 						if(isset($this->pos1[$sender->getName()], $this->pos2[$sender->getName()])){
 							$this->copy($sender);
 							return true;
@@ -119,7 +119,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/paste":
 					{
-						if(!$sender->hasPermission("magicwe.command.paste")) return;
+						if(!$sender->hasPermission("we.command.paste") && !$sender->hasPermission("we.command.admin")) return;
 						if(isset($this->pos1[$sender->getName()], $this->pos2[$sender->getName()])){
 							$this->paste($sender);
 							$sender->getLevel()->doChunkGarbageCollection();
@@ -130,7 +130,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/undo":
 					{
-						if(!$sender->hasPermission("magicwe.command.undo")) return;
+						if(!$sender->hasPermission("we.command.undo") && !$sender->hasPermission("we.command.admin")) return;
 						if(!empty($this->undo[$sender->getName()])){
 							$this->undo($sender);
 							$sender->getLevel()->doChunkGarbageCollection();
@@ -144,7 +144,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/redo":
 					{
-						if(!$sender->hasPermission("magicwe.command.redo")) return;
+						if(!$sender->hasPermission("we.command.redo") && !$sender->hasPermission("we.command.admin")) return;
 						if(!empty($this->redo[$sender->getName()])){
 							$this->redo($sender);
 							$sender->getLevel()->doChunkGarbageCollection();
@@ -158,7 +158,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/flip":
 					{
-						if(!$sender->hasPermission("magicwe.command.flip")) return;
+						if(!$sender->hasPermission("we.command.flip") && !$sender->hasPermission("we.command.admin")) return;
 						if(!empty($this->copy[$sender->getName()]) && isset($args[0])){
 							if(!in_array($args[0], array("x", "y", "z"))) return false;
 							$this->flip($sender, $args[0]);
@@ -172,10 +172,11 @@ class Main extends PluginBase implements Listener{
 						}
 						break;
 					}
-				
+
+				case "toggleeditwand":
 				case "/wand":
 					{
-						if(!$sender->hasPermission("magicwe.command.wand")) return;
+						if(!$sender->hasPermission("we.command.wand") && !$sender->hasPermission("we.command.admin")) return;
 						if(empty($this->wand[$sender->getName()]) || $this->wand[$sender->getName()] === 0){
 							$this->wand[$sender->getName()] = 1;
 							$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Wand tool turned ON");
@@ -190,7 +191,7 @@ class Main extends PluginBase implements Listener{
 				
 				case "/schem":
 					{
-						if(!$sender->hasPermission("magicwe.command.schem")) return;
+						if(!$sender->hasPermission("we.command.schem") && !$sender->hasPermission("we.command.admin")) return;
 						if(empty($args) || empty($args[0]) || empty($args[1])){
 							$sender->sendMessage(TextFormat::RED . "[MagicWE] Invalid option");
 						}
@@ -233,7 +234,7 @@ class Main extends PluginBase implements Listener{
 
 				case "/cyl":
 					{
-						if(!$sender->hasPermission("magicwe.command.cyl")) return;
+						if(!$sender->hasPermission("we.command.cyl") && !$sender->hasPermission("we.command.admin")) return;
 						if(isset($args[0], $args[1])){
 							#$this->fill($sender, $args[0]);
 							$this->W_cylinder($sender, $sender->getPosition(), $args[0], $args[1], $args[2]??1);
@@ -248,7 +249,7 @@ class Main extends PluginBase implements Listener{
 
 				case "/hcyl":
 					{
-						if(!$sender->hasPermission("magicwe.command.hcyl")) return;
+						if(!$sender->hasPermission("we.command.hcyl") && !$sender->hasPermission("we.command.admin")) return;
 						if(isset($args[0], $args[1])){
 							#$this->fill($sender, $args[0]);
 							$this->W_holocylinder($sender, $sender->getPosition(), $args[0], $args[1], $args[2]??1);
@@ -274,10 +275,10 @@ class Main extends PluginBase implements Listener{
 
 	public function wandPos1(BlockBreakEvent $event){
 		$sender = $event->getPlayer();
-		$block = $event->getBlock();
-		if($sender->hasPermission("magicwe.command.wand") && $sender->getInventory()->getItemInHand()->getId() === Item::WOODEN_AXE && $this->wand[$sender->getName()] === 1){
+		$block = $event->getBlock()->floor();
+		if($sender->hasPermission("we.command.wand") && !$sender->hasPermission("we.command.admin") && $sender->getInventory()->getItemInHand()->getId() === Item::WOODEN_AXE && $this->wand[$sender->getName()] === 1){
 			if($block->y > self::$MAX_BUILD_HEIGHT || $block->y < 0) $sender->sendMessage(TextFormat::GOLD . "[MagicWE] Warning: You are above y:" . self::$MAX_BUILD_HEIGHT . " or below y:0");
-			$this->pos1[$sender->getName()] = $block->floor();
+			$this->pos1[$sender->getName()] = $block;
 			$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Position 1 set as x:" . $block->x . " y:" . $block->y . " z:" . $block->z);
 			$event->setCancelled();
 		}
@@ -286,10 +287,10 @@ class Main extends PluginBase implements Listener{
 	public function wandPos2(PlayerInteractEvent $event){
 		if($event->getAction() !== PlayerInteractEvent::RIGHT_CLICK_BLOCK) return;
 		$sender = $event->getPlayer();
-		$block = $event->getBlock();
-		if($sender->hasPermission("magicwe.command.wand") && $sender->getInventory()->getItemInHand()->getId() === Item::WOODEN_AXE && $this->wand[$sender->getName()] === 1){
+		$block = $event->getBlock()->floor();
+		if($sender->hasPermission("we.command.wand") && !$sender->hasPermission("we.command.admin") && $sender->getInventory()->getItemInHand()->getId() === Item::WOODEN_AXE && $this->wand[$sender->getName()] === 1){
 			if($block->y > self::$MAX_BUILD_HEIGHT || $block->y < 0) $sender->sendMessage(TextFormat::GOLD . "[MagicWE] Warning: You are above y:" . self::$MAX_BUILD_HEIGHT . " or below y:0");
-			$this->pos2[$sender->getName()] = $block->floor();
+			$this->pos2[$sender->getName()] = $block;
 			$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Position 2 set as x:" . $block->x . " y:" . $block->y . " z:" . $block->z);
 			$event->setCancelled();
 		}

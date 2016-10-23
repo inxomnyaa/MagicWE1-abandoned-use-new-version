@@ -1,6 +1,6 @@
 name: MagicWE
 main: MagicWE\Main
-version: 0.2.6
+version: 0.2.7
 api: [1.13.0,2.0.0]
 load: STARTUP
 authors: [thebigsmileXD]
@@ -42,9 +42,13 @@ commands:
     description: Flip the clipboard of //copy
     usage: "//flip <x|y|z>"
     permission: we.commands.flip
+  toggleeditwand:
+    description: Quicker way to select area. Tap -> pos1 Break -> pos2
+    usage: "//wand || /toggleeditwand"
+    permission: we.commands.wand
   /wand:
     description: Quicker way to select area. Tap -> pos1 Break -> pos2
-    usage: "//wand"
+    usage: "//wand || /toggleeditwand"
     permission: we.commands.wand
   /schem:
     description: Schematic import + pasting + export
