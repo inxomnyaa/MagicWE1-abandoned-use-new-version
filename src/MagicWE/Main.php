@@ -33,7 +33,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 class Main extends PluginBase implements Listener{
 	public $areas;
 	private $pos1 = [], $pos2 = [], $copy = [], $copypos = [], $undo = [], $redo = [], $wand = [], $schematics = [];
-	private static $MAX_BUILD_HEIGHT = 128;
+	private static $MAX_BUILD_HEIGHT = 256;
 
 	public function onLoad(){
 		$this->getLogger()->info(TextFormat::GREEN . "MagicWE has been loaded!");
