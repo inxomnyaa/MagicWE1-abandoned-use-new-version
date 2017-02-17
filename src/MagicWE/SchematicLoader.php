@@ -5,7 +5,7 @@
  *
  * @Author: svile
  * @Kik: _svile_
- * @Telegram_Gruop: https://telegram.me/svile
+ * @Telegram_Group: https://telegram.me/svile
  * @E-mail: thesville@gmail.com
  * @Github: https://github.com/svilex/Schematic_Loader
  *
@@ -16,12 +16,12 @@
  */
 namespace MagicWE;
 
-use pocketmine\nbt\NBT;
-use MagicWE\Main;
-use pocketmine\item\Item;
 use pocketmine\block\Fence;
+use pocketmine\item\Item;
+use pocketmine\nbt\NBT;
+use pocketmine\Server;
 
-class SchematicLoader{
+class SchematicLoader {
 	/** @var SCHmain */
 	private $pg;
 	/** @var string */
@@ -38,34 +38,41 @@ class SchematicLoader{
 	private $width = 0;
 	/** @var array */
 	private $blocks_array = [];
+	/** @var array */
+	private $entities_array = [];
+	/** @var array */
+	private $tiles_array = [];
 
 	/**
 	 * Schematic constructor.
 	 *
-	 * @param Main $plugin 
-	 * @param string $path 
+	 * @param Main $plugin
+	 * @param string $path
 	 */
-	public function __construct(Main $plugin, $path){
+	public function __construct(Main $plugin, $path) {
 		$this->pg = $plugin;
 		$this->path = $path;
-		
-		if(!touch($path)) return false;
+
+		if (!touch($path)) return false;
 		$this->nbt = new NBT(NBT::BIG_ENDIAN);
 		$this->nbt->readCompressed(file_get_contents($path));
 		$data = $this->nbt->getData();
+		#Server::getInstance()->getLogger()->debug(var_export($data, true));
 		$this->blocks = $data->Blocks->getValue();
+		$this->entities_array = $data->Entities->getValue();
+		$this->tiles_array = $data->TileEntities->getValue();
 		$this->data = $data->Data->getValue();
-		$this->height = (int) $data->Height->getValue();
-		$this->length = (int) $data->Length->getValue();
-		$this->width = (int) $data->Width->getValue();
-		
-		for($x = 0; $x < $this->width; $x++){
-			for($y = 0; $y < $this->height; $y++){
-				for($z = 0; $z < $this->length; $z++){
+		$this->height = (int)$data->Height->getValue();
+		$this->length = (int)$data->Length->getValue();
+		$this->width = (int)$data->Width->getValue();
+
+		for ($x = 0; $x < $this->width; $x++) {
+			for ($y = 0; $y < $this->height; $y++) {
+				for ($z = 0; $z < $this->length; $z++) {
 					$i = $y * $this->width * $this->length + $z * $this->width + $x;
 					$id = $this->readByte($this->blocks, $i);
 					$damage = $this->readByte($this->data, $i);
-					switch($id){
+					switch ($id) {
 						case 95:
 							$id = Item::GLASS;
 							$damage = 0;
@@ -122,7 +129,7 @@ class SchematicLoader{
 		}
 	}
 
-	private static function readByte($c, $i = 0){
+	private static function readByte($c, $i = 0) {
 		return ord($c{$i});
 	}
 
@@ -130,7 +137,7 @@ class SchematicLoader{
 	 *
 	 * @return string
 	 */
-	public function getPath(){
+	public function getPath() {
 		return $this->path;
 	}
 
@@ -138,7 +145,7 @@ class SchematicLoader{
 	 *
 	 * @return mixed
 	 */
-	public function getBlocks(){
+	public function getBlocks() {
 		return $this->blocks;
 	}
 
@@ -146,15 +153,31 @@ class SchematicLoader{
 	 *
 	 * @return array
 	 */
-	public function getBlocksArray(){
+	public function getBlocksArray() {
 		return $this->blocks_array;
+	}
+
+	/**
+	 *
+	 * @return array
+	 */
+	public function getEntitiesArray() {
+		return $this->entities_array;
+	}
+
+	/**
+	 *
+	 * @return array
+	 */
+	public function getTilesArray() {
+		return $this->tiles_array;
 	}
 
 	/**
 	 *
 	 * @return mixed
 	 */
-	public function getData(){
+	public function getData() {
 		return $this->data;
 	}
 
@@ -162,7 +185,7 @@ class SchematicLoader{
 	 *
 	 * @return int
 	 */
-	public function getHeight(){
+	public function getHeight() {
 		return $this->height;
 	}
 
@@ -170,7 +193,7 @@ class SchematicLoader{
 	 *
 	 * @return int
 	 */
-	public function getLength(){
+	public function getLength() {
 		return $this->length;
 	}
 
@@ -178,7 +201,7 @@ class SchematicLoader{
 	 *
 	 * @return int
 	 */
-	public function getWidth(){
+	public function getWidth() {
 		return $this->width;
 	}
 }

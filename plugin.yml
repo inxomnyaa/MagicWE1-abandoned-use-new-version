@@ -1,9 +1,9 @@
 name: MagicWE
 main: MagicWE\Main
-version: 0.2.7
-api: [1.13.0,2.0.0]
+version: 0.3.0
+api: [2.0.0, 3.0.0]
 load: STARTUP
-authors: [thebigsmileXD]
+authors: [XenialDan]
 description: WorldEdit with a magic touch
 commands:
   /pos1:
