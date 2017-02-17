@@ -562,7 +562,8 @@ class Main extends PluginBase implements Listener {
 		for ($a = -$radius; $a <= $radius; $a++) {
 			for ($b = 0; $b < $height; $b++) {
 				for ($c = -$radius; $c <= $radius; $c++) {
-					if ($a * $a + $c * $c >= ($radius - 1) * ($radius - 1)) {
+					$rad = $a * $a + $c * $c;
+					if (($rad >= (($radius - 1) * ($radius - 1))) && ($rad <= ($radius * $radius))) {
 						if ($pos->getLevel()->setBlock(new Position($pos->x + $a, $pos->y + $b, $pos->z + $c, $pos->getLevel()), $block, false, false)) $changed++;
 					}
 				}
@@ -577,6 +578,7 @@ class Main extends PluginBase implements Listener {
 		$blocks = $schematic->getBlocksArray();
 		$entities = $schematic->getEntitiesArray();
 		$tiles = $schematic->getTilesArray();
+		var_dump($tiles);
 		$loc = $loc->floor();
 		if (!isset($this->undo[$player->getName()])) $this->undo[$player->getName()] = [];
 		$undoindex = count(array_keys($this->undo[$player->getName()]));
@@ -592,11 +594,11 @@ class Main extends PluginBase implements Listener {
 		/** @var CompoundTag $nbt */
 		foreach ($tiles as $nbt) {//TODO: Fix that these aren't pasted the second time. Reason: fucking increasing position
 			$blockloc = $loc->add($nbt->x->getValue(), $nbt->y->getValue(), $nbt->z->getValue());
-			var_dump($blockloc);
+			#var_dump($blockloc);
 			if ($blockloc->y > self::$MAX_BUILD_HEIGHT) continue;
-			$nbt->x->setValue($blockloc->x);
-			$nbt->y->setValue($blockloc->y);
-			$nbt->z->setValue($blockloc->z);//Update the positions
+			#$nbt->x->setValue($blockloc->x);
+			#$nbt->y->setValue($blockloc->y);
+			#$nbt->z->setValue($blockloc->z);//Update the positions
 			//TODO: I need help here. On a second run, the values are DOUBLED!
 			/*if(!$level->isChunkLoaded($x >> 4, $z >> 4)) $level->loadChunk($x >> 4, $z >> 4, true);*///Already loaded before, may be useless
 			$tile = Tile::createTile($nbt->id->getValue(), $level->getChunk($blockloc->x >> 4, $blockloc->z >> 4), $nbt);//TODO: PC -> PE ID conversion
@@ -608,9 +610,9 @@ class Main extends PluginBase implements Listener {
 		foreach ($entities as $nbt) {//TODO: Fix that these aren't pasted the second time. Reason: fucking increasing position
 			$blockloc = $loc->add($nbt->Pos[0], $nbt->Pos[1], $nbt->Pos[2]);
 			if ($blockloc->y > self::$MAX_BUILD_HEIGHT) continue;
-			$nbt->Pos[0] = $blockloc->x;
-			$nbt->Pos[1] = $blockloc->y;
-			$nbt->Pos[2] = $blockloc->z;//Update the positions
+			#$nbt->Pos[0] = $blockloc->x;
+			#$nbt->Pos[1] = $blockloc->y;
+			#$nbt->Pos[2] = $blockloc->z;//Update the positions
 			//TODO: I need help here. On a second run, the values are DOUBLED!
 			/*if(!$level->isChunkLoaded($x >> 4, $z >> 4)) $level->loadChunk($x >> 4, $z >> 4, true);*///Already loaded before, may be useless
 			$entity = Entity::createEntity($nbt->id->getValue(), $level->getChunk($blockloc->x >> 4, $blockloc->z >> 4), $nbt);//TODO: PC -> PE ID conversion
