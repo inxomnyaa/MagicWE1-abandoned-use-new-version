@@ -1,9 +1,9 @@
 # MagicWE (PHP7)
 WorldEdit with a magic touch for PocketMine
+Special thanks to [@svilex](https://github.com/svilex), helping me with the schematics!
+
 # Great news: MagicWE v2 is in progress!
 a total rewrite of the current plugin
-
-Special thanks to [@svilex](https://github.com/svilex), helping me with the schematics!
 
 # How is it different to other WorldEdit-plugins?
 Simply this:
