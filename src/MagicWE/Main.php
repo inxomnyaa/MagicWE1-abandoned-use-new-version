@@ -54,6 +54,7 @@ class Main extends PluginBase implements Listener {
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
 		if ($sender instanceof Player) {
 			switch ($command) {
+				case "/":
 				case "/help": {
 					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Available commands: ");
 					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //pos1: Selects the first position from player on floor");
