@@ -54,6 +54,25 @@ class Main extends PluginBase implements Listener {
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
 		if ($sender instanceof Player) {
 			switch ($command) {
+				case "/help": {
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] Available commands: ");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //pos1: Selects the first position from player on floor");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //pos2: Selects the second position from player on floor");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //set: Sets block to specified block on selected position");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //replace: Replaced block by another specified block on selected position");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //copy: Copies the selected position into the clipboard");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //paste: Pastes the clipboard");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //undo: Undo the changes");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //redo: Redo the changes");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //flip: Flips the clipboard into specified position");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //wand | /toggleeditwand: Toggles the wand into the held wooden axe");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //schem: Manage schematics");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //cyl: Creates a cylinder on foot position");
+					$sender->sendMessage(TextFormat::GREEN . "[MagicWE] //hcyl: Creates a hollow cylinder on foot position");
+					return true;
+					break;
+				}
+				
 				case "/pos1": {
 					if (!$sender->hasPermission("we.command.pos1") && !$sender->hasPermission("we.command.admin")) return true;
 					$pos1x = $sender->getFloorX();
