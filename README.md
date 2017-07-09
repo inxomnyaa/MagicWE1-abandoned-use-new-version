@@ -4,11 +4,12 @@ WorldEdit with a magic touch for PocketMine
 Special thanks to [@svilex](https://github.com/svilex), helping me with the schematics!
 
 # Great news: MagicWE v2 is in progress!
-a total rewrite of the current plugin
+[MagicWE v.2](https://github.com/thebigsmileXD/MagicWEv2). Real || !Real?
 
 # How is it different to other WorldEdit-plugins?
 Simply this:
  - Way faster than its competitors ([World Edit](http://www.minecraftforum.net/forums/minecraft-pocket-edition/mcpe-mods-tools/2295141-world-edit-plugin-for-pocketmine-0-9-5-0-10-4-by) by MCPEGenius79), [WorldEditArt](https://github.com/PEMapModder/Small-ZC-Plugins/tree/master/WorldEditArt) by @PEMapModder (and its rewrite [WorldEditArt](https://github.com/LegendOfMCPE/WorldEditArt) by @LegendOfMCPE), [WorldEditor](https://github.com/shoghicp/WorldEditor) by @shoghicp
+ - As of what twitter users stated out: noob proof, the easiest to use
  - //pos1
  - //pos2
  - //wand (Fully working Wand selections using a wooden axe)
