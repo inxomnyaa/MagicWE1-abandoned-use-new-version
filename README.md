@@ -1,10 +1,15 @@
+# Support and coding ended!
+Thanks to everyone for using MagicWE version 1.
+Due to outdated code, bad codestyle and literally featurebreaking issues like //wand not working anymore or //undo failing.
+
+# Great news: MagicWE v2 is in progress!
+[MagicWE v.2](https://github.com/thebigsmileXD/MagicWEv2). Real || !Real?
+MagicWE will be a total rewrite of MagicWE1. It will have an API, copy pasting flags, brushes and more!
+
 # MagicWE (PHP7)
 WorldEdit with a magic touch for PocketMine
 
 Special thanks to [@svilex](https://github.com/svilex), helping me with the schematics!
-
-# Great news: MagicWE v2 is in progress!
-[MagicWE v.2](https://github.com/thebigsmileXD/MagicWEv2). Real || !Real?
 
 # How is it different to other WorldEdit-plugins?
 Simply this:
