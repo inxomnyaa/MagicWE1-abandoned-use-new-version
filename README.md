@@ -1,3 +1,5 @@
+# MAGICWE ICON CONTEST! Create and submit your best Poggit Icons for the top downloaded and most used famous PMMP World Edit plugin and win a prize!
+
 # Support and coding ended!
 Thanks to everyone for using MagicWE version 1.
 Due to outdated code, bad codestyle and literally featurebreaking issues like //wand not working anymore or //undo failing.
@@ -13,7 +15,7 @@ Special thanks to [@svilex](https://github.com/svilex), helping me with the sche
 
 # How is it different to other WorldEdit-plugins?
 Simply this:
- - Way faster than its competitors ([World Edit](http://www.minecraftforum.net/forums/minecraft-pocket-edition/mcpe-mods-tools/2295141-world-edit-plugin-for-pocketmine-0-9-5-0-10-4-by) by MCPEGenius79), [WorldEditArt](https://github.com/PEMapModder/Small-ZC-Plugins/tree/master/WorldEditArt) by @PEMapModder (and its rewrite [WorldEditArt](https://github.com/LegendOfMCPE/WorldEditArt) by @LegendOfMCPE), [WorldEditor](https://github.com/shoghicp/WorldEditor) by @shoghicp
+ - Faster than most of its competitors ([World Edit](http://www.minecraftforum.net/forums/minecraft-pocket-edition/mcpe-mods-tools/2295141-world-edit-plugin-for-pocketmine-0-9-5-0-10-4-by) by MCPEGenius79), [WorldEditArt](https://github.com/PEMapModder/Small-ZC-Plugins/tree/master/WorldEditArt) by @PEMapModder (and its rewrite [WorldEditArt](https://github.com/LegendOfMCPE/WorldEditArt) by @LegendOfMCPE), [WorldEditor](https://github.com/shoghicp/WorldEditor) by @shoghicp
  - As of what twitter users stated out: noob proof, the easiest to use
  - //pos1
  - //pos2
