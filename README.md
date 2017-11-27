@@ -1,12 +1,12 @@
-# MAGICWE ICON CONTEST! Create and submit your best Poggit Icons for the top downloaded and most used famous PMMP World Edit plugin and win a prize!
-
 # Support and coding ended!
 Thanks to everyone for using MagicWE version 1.
-Due to outdated code, bad codestyle and literally featurebreaking issues like //wand not working anymore or //undo failing.
 
-# Great news: MagicWE v2 is in progress!
-[MagicWE v.2](https://github.com/thebigsmileXD/MagicWEv2). Real || !Real?
-MagicWE will be a total rewrite of MagicWE1. It will have an API, copy pasting flags, brushes and more!
+Due to outdated code, bad codestyle and literally featurebreaking issues like //wand not working anymore or //undo failing, i continued by coding a new version of the plugin from scratch.
+
+# Head over to MagicWEv2
+[MagicWE v.2](https://github.com/thebigsmileXD/MagicWEv2).
+
+MagicWEv2 is a total rewrite of MagicWEv1. It has an API, copy pasting flags, brushes and more!
 
 # MagicWE (PHP7)
 WorldEdit with a magic touch for PocketMine
